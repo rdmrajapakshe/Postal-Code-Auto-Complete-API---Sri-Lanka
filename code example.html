@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<!--Town / City-->
+<input  id="city" list="list_by_RDMSoftwareSolutions" />
+<div id="suggestions"></div><br>
+<!--Postal Code-->
+<input  id="postal-code"  />
+
+<script>
+$(document).ready(function(){
+    var api = "https://rdmsoftwaresolutions.com/dev/auto_fill_api/api.php"
+  $("#city").keyup(function(){
+      var txt = $("#city").val();
+      $.ajax({
+        url:api,
+        method:"POST",
+        data:{suggest:txt},
+        success:function(data)
+        {
+         $("#suggestions").html(data);
+      }
+     })
+  });
+    $("#city").blur(function(){
+      var txt = $("#city").val();
+      $.ajax({
+        url:api,
+        method:"POST",
+        data:{postal_code:txt},
+        success:function(data)
+        {
+         $("#postal-code").val(data);
+      }
+     })
+  });
+});
+</script>
+</body>
+</html>	
